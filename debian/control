@@ -1,0 +1,76 @@
+Source: libzip
+Priority: optional
+Maintainer: Stefan Schörghofer <amd1212@4md.gr>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: cmake,
+               debhelper-compat (= 12),
+               libbz2-dev,
+               libssl-dev,
+               mandoc,
+               unzip,
+               zlib1g-dev
+Standards-Version: 4.3.0.1
+Section: libs
+Rules-Requires-Root: no
+Homepage: https://libzip.org
+Vcs-Git: https://salsa.debian.org/debian/libzip.git
+Vcs-Browser: https://salsa.debian.org/debian/libzip
+
+Package: libzip-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libzip4 (= ${binary:Version}),
+         zlib1g-dev,
+         ${misc:Depends}
+Description: library for reading, creating, and modifying zip archives (development)
+ libzip is a C library for reading, creating, and modifying zip archives. Files
+ can be added from data buffers, files, or compressed data copied directly from
+ other zip archives. Changes made without closing the archive can be reverted.
+ .
+ This package contains the static libraries and headers for developing
+ applications that use the libzip library API.
+
+Package: libzip4
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: library for reading, creating, and modifying zip archives (runtime)
+ libzip is a C library for reading, creating, and modifying zip archives. Files
+ can be added from data buffers, files, or compressed data copied directly from
+ other zip archives. Changes made without closing the archive can be reverted.
+ .
+ This package contains the files necessary for running applications that
+ use the libzip library.
+
+Package: zipcmp
+Section: utils
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: compare contents of zip archives
+ zipcmp compares two zip archives and checks if they contain the same files,
+ comparing their names, uncompressed sizes, and CRCs. File order and compressed
+ size differences are ignored.
+
+Package: zipmerge
+Section: utils
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: merge zip archives
+ zipmerge merges a source zip archives into a target zip archive.
+ By default, files in the source zip archives overwrite existing files of the
+ same name in the target zip archive.
+
+Package: ziptool
+Section: utils
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: modify zip archives
+ ziptool is a utility for working with zip archives.  It can modify
+ details of zip archives according to the commands given, including
+ timestamps and other metadata about the included files.

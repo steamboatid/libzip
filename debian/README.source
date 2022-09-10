@@ -1,0 +1,48 @@
+libzip for Debian
+==================
+
+libzip can be downloaded from its webpage:
+https://libzip.org/download
+
+The upstream tarball is not suitable for Debian packaging directly. One file has to be removed from the tarball before packaing.
+
+
+Obtaining the Debian source package
+-----------------------------------
+
+libzip is maintained using git-buildpackage. This file documents the steps
+needed to package a new upstream version.
+
+One-time setup steps: get your copy of the Debian source package from Git:
+  $ git clone ssh://<user>@git.debian.org/git/collab-maint/libzip.git
+  $ cd libzip
+  $ git checkout -b pristine-tar remotes/origin/pristine-tar
+  $ git checkout -b upstream remotes/origin/upstream
+  $ git checkout master
+
+Packaging a new version
+-----------------------
+
+From inside the libzip folder:
+1. Retrieve the new upstream tarball, update the new upstream source into the
+git repository, and remove the non-DFSG file:
+  $ mkdir -p ../tarfiles
+  $ cd ../tarfiles/
+  $ cp libzip_$$VERSION$$.orig.tar.gz libzip+$$VERSION$$+dfsg.1.orig.tar.gz
+  $ gunzip libzip+$$VERSION$$+dfsg.1.orig.tar.gz
+  $ tar --delete --file libzip_$$VERSION$$.orig.tar libzip-rel-$$VERSION$$/docs/appnote.txt
+  $ gzip libzip+$$VERSION$$+dfsg.1.orig.tar.gz
+
+2. Build the package:
+  $ git-buildpackage --git-pristine-tar import-orig ../tarfiles/libzip+$$VERSION$$+dfsg.1.orig.tar.gz
+
+3. Don't forget to commit your changes, tag the new Debian version and push
+everything back up to the Debian Git repository:
+  $ git commit -a
+  $ git-buildpackage --git-tag
+  $ git push --all
+  $ git push --tags
+
+Thanks for updating the package!
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Thu, 02 Nov 2017 22:13:37 +0100

@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+DEB_HOST_MULTIARCH ?=.
+
+%:
+	dh $@
+
+override_dh_link:
+	install -d debian/libzip-dev/usr/include/${DEB_HOST_MULTIARCH}
+	dh_link
+
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS.md
+
+override_dh_missing:
+	dh_missing --fail-missing
+
+override_dh_clean:
+	rm -rf debian/.debhelper
+	dh_clean

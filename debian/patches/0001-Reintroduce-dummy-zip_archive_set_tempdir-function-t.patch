@@ -1,0 +1,56 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@debian.org>
+Date: Mon, 21 Jan 2019 11:13:43 +0000
+Subject: Reintroduce dummy zip_archive_set_tempdir function to lower the
+ SONAME back to libzip.so.4
+
+---
+ lib/CMakeLists.txt | 2 +-
+ lib/zip.h          | 1 +
+ lib/zip_open.c     | 9 +++++++++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 082203d..3ee5a8c 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -167,7 +167,7 @@ if(HAVE_CRYPTO)
+ endif()
+ 
+ if(SHARED_LIB_VERSIONNING)
+-  set_target_properties(zip PROPERTIES VERSION 5.3 SOVERSION 5)
++  set_target_properties(zip PROPERTIES VERSION 4.0 SOVERSION 4)
+ endif()
+ 
+ target_link_libraries(zip PRIVATE ZLIB::ZLIB)
+diff --git a/lib/zip.h b/lib/zip.h
+index a90776d..c3ad4d4 100644
+--- a/lib/zip.h
++++ b/lib/zip.h
+@@ -360,6 +360,7 @@ ZIP_EXTERN int zip_error_get_sys_type(int);
+ ZIP_EXTERN void zip_error_get(zip_t *_Nonnull, int *_Nullable, int *_Nullable);                            /* use zip_get_error, zip_error_code_zip / zip_error_code_system */
+ ZIP_EXTERN int zip_error_to_str(char *_Nonnull, zip_uint64_t, int, int);                                   /* use zip_error_init_with_code / zip_error_strerror */
+ ZIP_EXTERN void zip_file_error_get(zip_file_t *_Nonnull, int *_Nullable, int *_Nullable);                  /* use zip_file_get_error, zip_error_code_zip / zip_error_code_system */
++ZIP_EXTERN int zip_archive_set_tempdir(zip_t *, const char *);
+ #endif
+ 
+ ZIP_EXTERN int zip_close(zip_t *_Nonnull);
+diff --git a/lib/zip_open.c b/lib/zip_open.c
+index 019cd98..213ca90 100644
+--- a/lib/zip_open.c
++++ b/lib/zip_open.c
+@@ -148,6 +148,15 @@ zip_open_from_source(zip_source_t *src, int _flags, zip_error_t *error) {
+     }
+ }
+ 
++ZIP_EXTERN int
++zip_archive_set_tempdir(zip_t *za, const char *tempdir)
++{
++    (void)(za);
++    (void)(tempdir);
++
++    return 0;
++}
++
+ 
+ zip_t *
+ _zip_open(zip_source_t *src, unsigned int flags, zip_error_t *error) {

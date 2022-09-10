@@ -1,0 +1,287 @@
+libzip (1.7.3-1) unstable; urgency=medium
+
+  * New upstream version 1.7.3
+  * Fix the SOVERSION revert patch
+  * Add new cmake helper files to libzip-dev
+  * Update d/libzip4.symbols
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 21:01:16 +0200
+
+libzip (1.6.1-3) unstable; urgency=medium
+
+  * It's never a good time to do unnecessary SONAME bump, it's a burden
+    on an archive just for a single removed symbol.  Revert the SONAME
+    bump again.
+  * Repair the damaged d/changelog
+  * Upload to unstable.
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 28 Apr 2020 14:44:21 +0200
+
+libzip (1.6.1-2) experimental; urgency=medium
+
+  [ Stefan Schoerghofer ]
+  * Fixed changelog and control file
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Wed, 8 Apr 2020 10:29:05 +0200
+
+libzip (1.6.1-1) experimental; urgency=medium
+
+  [ Stefan Schoerghofer ]
+  * New upstream version 1.6.1
+  * Removed SONAME lowering-patch. zip PROPERTIES VERSION
+    updated to 5.1 so it appears to be a good time to do the SONAME
+    bump.
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Fri, 21 Feb 2020 12:58:37 +0100
+
+libzip (1.5.2-1) unstable; urgency=medium
+
+  [ Ondřej Surý ]
+  * Drop --with autoreconf, not needed with debhelper v12 compat
+  and libzip uses cmake
+
+  [ Stefan Schoerghofer ]
+  * New upstream version 1.5.2 (Closes: #939474)
+  * Refreshing patches
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Fri, 22 Nov 2019 14:43:32 +0100
+
+libzip (1.5.1-4) unstable; urgency=high
+
+  * Add patch to fix serious bug in the AES encryption.
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 18 Mar 2019 08:10:42 +0000
+
+libzip (1.5.1-3) unstable; urgency=medium
+
+  [ Bernd Zeimetz ]
+  * Create .gitlab-ci.yml file
+  * Update debian/.gitlab-ci.yml Deleted .gitlab-ci.yml
+
+  [ Stefan Schörghofer ]
+  * Fixed Lintian warnings
+  * Added lintian-ignore for possible-gpl-code-linked-with-openssl
+    License is fine, GPL is coming from /debian
+  * Removed gladman-fcrypt from /debian/copyright, not used anymore
+  * Adopted /debian/README.source
+  * Corrected my email Address in control
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Tue, 22 Jan 2019 21:06:19 +0100
+
+libzip (1.5.1-2) experimental; urgency=medium
+
+  * Reintroduce dummy zip_archive_set_tempdir function to lower the SONAME
+    back to libzip.so.4
+  * Revert the soname change back to libzip4
+  * Add Bernd and Stefan as co-maintainers
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 22 Jan 2019 18:13:16 +0000
+
+libzip (1.5.1-1) experimental; urgency=medium
+
+  * Just take over the orphaned package, Stefan Schörghofer is welcome
+    to join the packaging team if he wants.
+  * Update Vcs-* links and upstream URL
+  * Upstream dropped static library, remove it from package for a moment
+  * Add libbz2-dev and libssl-dev to libzip Build-Deps
+  * s/API-CHANGES/API-CHANGES.md/
+  * Update symbols file
+  * Update watch file
+  * New upstream version 1.5.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 19 Jan 2019 06:33:51 +0000
+
+libzip (1.3.2-1) experimental; urgency=medium
+
+  * Update to upstream version 1.3.2 (Closes: #881877)
+  * Updated symbols file
+  * Updated libzip-dev.install and rules to cover the new path of zipconf.h
+  * Changed rules file to fix sets-dpkg-architecture-variable lintian warning
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Mon, 20 Nov 2017 21:39:26 +0100
+
+libzip (1.3.0+dfsg.1-1) experimental; urgency=medium
+
+  * Updated to Upstream version 1.3.0 (Closes: #874010)
+  * Changed Maintainer to Stefan Schörghofer (Closes: #879387)
+  * libzip soname change (libzip4 -> libzip5)
+  * Update symbols file
+  * Added mandoc to Build-Depends
+  * Bump standards version
+  * changed watch uri to https
+  * added gladman-fcrypt copyright to debian/copyright file
+  * Removed docs/appnote.txt because it conflicts with DFSG
+  * Added README.source file with build instructions
+
+ -- Stefan Schörghofer <amd1212@4md.gr>  Mon, 30 Oct 2017 23:05:39 +0100
+
+libzip (1.1.3-1) unstable; urgency=medium
+
+  * Imported Upstream version 1.1.3
+  * Add myself to Uploaders
+  * Bump standards version (no change)
+  * Rewrap with wrap-and-sort -a for better readability
+  * Upstream changelog got renamed to NEWS.md
+  * Install README.md and TODO.md into the packages again
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 31 Dec 2016 15:03:01 +0100
+
+libzip (1.1.2-1.1) unstable; urgency=medium
+
+  [ Hans-Christoph Steiner ]
+  * Imported Upstream version 1.1.1
+  * New upstream version (Closes: #662083)
+
+  [ Ondřej Surý ]
+  * Non-maintainer upload.
+  * Imported Upstream version 1.1.2
+  * Install NEWS as upstream changelog, README and TODO is no more
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 10 May 2016 12:09:23 +0200
+
+libzip (1.0.1-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Upload Ubuntu version to Debian (Closes: #798747)
+  * Stop building the ziptorrent; removed upstream. (Closes: #540992, #784684)
+  * Bump standards version.
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Tue, 09 Feb 2016 20:48:46 +0100
+
+libzip (1.0.1-0ubuntu1) wily; urgency=medium
+
+  * New upstream version.
+  * libzip soname change (libzip2 -> libzip4).
+  * Update symbols file.
+  * Stop building the libtorrent package; removed upstream.
+  * Mark libzip-dev and libzip4 as Multi-Arch: same.
+  * Bump standards version.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 12 Sep 2015 02:51:54 +0200
+
+libzip (0.11.2-1.2) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Add CVE-2015-2331.patch patch.
+    CVE-2015-2331: ZIP integer overflow leads to writing past heap boundary.
+    (Closes: #780756)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Fri, 20 Mar 2015 20:17:45 +0100
+
+libzip (0.11.2-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Put a symlink to zipconf.h on the default search path, so that
+    packages that do not use pkg-config to locate libzip will not FTBFS.
+    Thanks to Simon McVittie (Closes: #739308).
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Wed, 06 Aug 2014 15:38:27 +0200
+
+libzip (0.11.2-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #734388).
+  * Remove patches:
+    - fix_open_nonarchive_test.patch - fixed upstream
+    - fix_zipconf_path.patch - fixed upstream
+    - fix_broken_decrypt.patch - fixed upstream
+    - fix_autotools_tests.diff - stolen upstream
+  * Update debian/control:
+    - add unzip to Build-Depends.
+    - bump compat to 9
+  * Update *.install: multiarch paths.
+  * Update libzip2 symbols file.
+
+ -- Fathi Boudra <fabo@debian.org>  Sun, 09 Feb 2014 13:24:18 +0200
+
+libzip (0.10.1-1.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix "FTBFS: dh_auto_test: make -j1 check returned exit code 2":
+    add patch fix_autotools_tests.diff (autotools test fix, backported from
+    upstream 0.11.1), taken from Ubuntu package. Thanks, Bjoern Michaelsen.
+    (Closes: #713393, LP: #1197023)
+
+ -- gregor herrmann <gregoa@debian.org>  Sun, 03 Nov 2013 15:27:06 +0100
+
+libzip (0.10.1-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Re-enable tests
+  * Fix broken decrypt on amd64 (Closes: #665225).
+
+ -- Luk Claes <luk@debian.org>  Sat, 07 Jul 2012 02:03:46 +0000
+
+libzip (0.10.1-1) unstable; urgency=low
+
+  * New upstream release: fix CVE-2012-1162 and CVE-2012-1163
+    Incorrect loop construct and numeric overflow. (Closes: #664990, #665957)
+
+ -- Fathi Boudra <fabo@debian.org>  Mon, 21 May 2012 15:16:11 +0300
+
+libzip (0.10-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #647131)
+  * Add patches:
+    - fix_open_nonarchive_test.patch
+    - fix_zipconf_path.patch
+  * Update debian/compat: bump to 8.
+  * Update debian/rules:
+    - build depends on dh-autoreconf.
+    - bump debhelper build dependency to 8.0.0.
+    - bump Standards-Version to 3.9.0 - no changes needed.
+    - rename libzip1 to libzip2 (bump soname).
+  * Update debian/rules:
+    - use dh with autoreconf.
+    - drop override_dh_auto_test.
+  * Update debian/*.install files.
+
+ -- Fathi Boudra <fabo@debian.org>  Sat, 31 Dec 2011 14:39:13 +0200
+
+libzip (0.9.3-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #567769)
+  * Drop patch to support archives with 64k entries - stolen upstream.
+  * Add libzip1 symbols file.
+  * Switch to dpkg-source 3.0 (quilt) format:
+    - drop quilt build dependency.
+  * Switch to dh:
+    - drop cdbs build dependency.
+    - bump debhelper build dependency version to 7.4.15.
+    - enable parallel build (pass --parallel option to dh).
+  * Bump Standards-Version to 3.8.4 (no changes needed).
+  * Update debian/copyright file:
+    - upstream contact e-mail, years and explicit GPL version.
+
+ -- Fathi Boudra <fabo@debian.org>  Wed, 24 Mar 2010 10:55:48 +0100
+
+libzip (0.9-3) unstable; urgency=low
+
+  * Add patch to support archives with 64k entries. (Closes: #536215)
+    Thanks to Dieter Baron.
+
+ -- Fathi Boudra <fabo@debian.org>  Tue, 28 Jul 2009 22:21:37 +0200
+
+libzip (0.9-2) unstable; urgency=low
+
+  * Fix shlibs. (Closes: #537954)
+
+ -- Fathi Boudra <fabo@debian.org>  Sat, 25 Jul 2009 11:47:15 +0200
+
+libzip (0.9-1) unstable; urgency=low
+
+  * New upstream release (Closes: #537349)
+
+  [ Fathi Boudra ]
+  * Add ziptorrent package.
+
+  [ Matthew Rosewarne ]
+  * Update debian/control: add Homepage field.
+  * Add watch file.
+
+ -- Fathi Boudra <fabo@debian.org>  Fri, 17 Jul 2009 15:01:02 +0200
+
+libzip (0.8-1) unstable; urgency=low
+
+  * Initial release. (Closes: #446583)
+
+ -- Fathi Boudra <fboudra@free.fr>  Sun, 14 Oct 2007 09:20:12 +0200
