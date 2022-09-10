@@ -1,3 +1,6 @@
+
+A simple fork of [nih-at/libzip] (https://github.com/nih-at/libzip)
+
 This is libzip, a C library for reading, creating, and modifying
 zip and zip64 archives. Files can be added from data buffers, files,
 or compressed data copied directly from other zip archives. Changes
