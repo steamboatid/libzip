@@ -33,6 +33,8 @@
 
 #include "config.h"
 
+#include "compat.h"
+
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,8 +56,6 @@
 extern int optopt;
 
 #include "zip.h"
-
-#include "compat.h"
 
 typedef struct dispatch_table_s {
     const char *cmdline_name;
@@ -630,12 +630,8 @@ zstat(char *argv[]) {
         printf("compressed size: '%" PRIu64 "'\n", sb.comp_size);
     if (sb.valid & ZIP_STAT_MTIME) {
         struct tm *tpm;
-#ifdef HAVE_LOCALTIME_R
         struct tm tm;
-        tpm = localtime_r(&sb.mtime, &tm);
-#else
-        tpm = localtime(&sb.mtime);
-#endif
+        tpm = zip_localtime(&sb.mtime, &tm);
         if (tpm == NULL) {
             printf("mtime: <not valid>\n");
         }

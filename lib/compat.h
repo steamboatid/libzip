@@ -131,6 +131,21 @@ typedef char bool;
 #define ftello(s) ((long)ftell((s)))
 #endif
 
+#ifdef HAVE_LOCALTIME_S
+#ifdef _WIN32
+/* Windows is incompatible to the C11 standard, hurray! */
+#define zip_localtime(t, tm) (localtime_s((tm), (t)) == 0 ? tm : NULL)
+#else
+#define zip_localtime localtime_s
+#endif
+#else
+#ifdef HAVE_LOCALTIME_R
+#define zip_localtime localtime_r
+#else
+#define zip_localtime(t, tm) (localtime(t))
+#endif
+#endif
+
 #ifndef HAVE_MEMCPY_S
 #define memcpy_s(dest, destsz, src, count) (memcpy((dest), (src), (count)) == NULL)
 #endif
