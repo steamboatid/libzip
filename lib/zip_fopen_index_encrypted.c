@@ -53,7 +53,7 @@ zip_fopen_index_encrypted(zip_t *za, zip_uint64_t index, zip_flags_t flags, cons
         return NULL;
 
     if (zip_source_open(src) < 0) {
-        _zip_error_set_from_source(&za->error, src);
+        zip_error_set_from_source(&za->error, src);
         zip_source_free(src);
         return NULL;
     }
@@ -78,7 +78,6 @@ _zip_file_new(zip_t *za) {
         return NULL;
     }
 
-    zf->za = za;
     zip_error_init(&zf->error);
     zf->src = NULL;
 

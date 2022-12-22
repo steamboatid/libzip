@@ -120,7 +120,7 @@ zip_open_from_source(zip_source_t *src, int _flags, zip_error_t *error) {
             return NULL;
         }
         if (zip_source_open(src) < 0) {
-            _zip_error_set_from_source(error, src);
+            zip_error_set_from_source(error, src);
             return NULL;
         }
 
@@ -151,7 +151,7 @@ _zip_open(zip_source_t *src, unsigned int flags, zip_error_t *error) {
 
     zip_stat_init(&st);
     if (zip_source_stat(src, &st) < 0) {
-        _zip_error_set_from_source(error, src);
+        zip_error_set_from_source(error, src);
         return NULL;
     }
     if ((st.valid & ZIP_STAT_SIZE) == 0) {
@@ -321,7 +321,7 @@ _zip_read_cdir(zip_t *za, zip_buffer_t *buffer, zip_uint64_t buf_offset, zip_err
         cd_buffer = NULL;
 
         if (zip_source_seek(za->src, (zip_int64_t)cd->offset, SEEK_SET) < 0) {
-            _zip_error_set_from_source(error, za->src);
+            zip_error_set_from_source(error, za->src);
             _zip_cdir_free(cd);
             return NULL;
         }
@@ -388,7 +388,7 @@ _zip_read_cdir(zip_t *za, zip_buffer_t *buffer, zip_uint64_t buf_offset, zip_err
             zip_int64_t offset = zip_source_tell(za->src);
 
             if (offset < 0) {
-                _zip_error_set_from_source(error, za->src);
+                zip_error_set_from_source(error, za->src);
                 _zip_cdir_free(cd);
                 return NULL;
             }
@@ -445,7 +445,7 @@ _zip_checkcons(zip_t *za, zip_cdir_t *cd, zip_error_t *error) {
         }
 
         if (zip_source_seek(za->src, (zip_int64_t)cd->entry[i].orig->offset, SEEK_SET) < 0) {
-            _zip_error_set_from_source(error, za->src);
+            zip_error_set_from_source(error, za->src);
             return -1;
         }
 
@@ -491,9 +491,20 @@ _zip_headercomp(const zip_dirent_t *central, const zip_dirent_t *local) {
 
     if ((central->crc != local->crc) || (central->comp_size != local->comp_size) || (central->uncomp_size != local->uncomp_size)) {
         /* InfoZip stores valid values in local header even when data descriptor is used.
-           This is in violation of the appnote. */
-        if (((local->bitflags & ZIP_GPBF_DATA_DESCRIPTOR) == 0 || local->crc != 0 || local->comp_size != 0 || local->uncomp_size != 0))
+           This is in violation of the appnote.
+	   macOS Archive sets the compressed size even when data descriptor is used ( but not the others),
+	   also in violation of the appnote.
+	*/
+	/* if data descriptor is not used, the values must match */
+        if ((local->bitflags & ZIP_GPBF_DATA_DESCRIPTOR) == 0) {
             return -1;
+	}
+	/* when using a data descriptor, the local header value must be zero or match */
+	if ((local->crc != 0 && central->crc != local->crc) ||
+	    (local->comp_size != 0 && central->comp_size != local->comp_size) ||
+	    (local->uncomp_size != 0 && central->uncomp_size != local->uncomp_size)) {
+	    return -1;
+	}
     }
 
     return 0;
@@ -565,7 +576,7 @@ _zip_find_central_dir(zip_t *za, zip_uint64_t len) {
         }
     }
     if ((buf_offset = zip_source_tell(za->src)) < 0) {
-        _zip_error_set_from_source(&za->error, za->src);
+        zip_error_set_from_source(&za->error, za->src);
         return NULL;
     }
 
@@ -749,7 +760,7 @@ _zip_read_eocd64(zip_source_t *src, zip_buffer_t *buffer, zip_uint64_t buf_offse
     }
     else {
         if (zip_source_seek(src, (zip_int64_t)eocd_offset, SEEK_SET) < 0) {
-            _zip_error_set_from_source(error, src);
+            zip_error_set_from_source(error, src);
             return NULL;
         }
         if ((buffer = _zip_buffer_new_from_source(src, EOCD64LEN, eocd, error)) == NULL) {
